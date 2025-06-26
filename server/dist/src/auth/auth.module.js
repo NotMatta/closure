@@ -12,12 +12,13 @@ const auth_service_1 = require("./auth.service");
 const auth_controller_1 = require("./auth.controller");
 const users_module_1 = require("../users/users.module");
 const jwt_1 = require("@nestjs/jwt");
+const auth_guard_1 = require("./auth.guard");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
-        providers: [auth_service_1.AuthService],
+        providers: [auth_service_1.AuthService, auth_guard_1.AuthGuard],
         controllers: [auth_controller_1.AuthController],
         imports: [
             users_module_1.UsersModule,

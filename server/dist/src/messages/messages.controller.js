@@ -12,37 +12,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UsersController = void 0;
+exports.MessagesController = void 0;
 const common_1 = require("@nestjs/common");
-const users_service_1 = require("./users.service");
-let UsersController = class UsersController {
-    usersService;
-    constructor(usersService) {
-        this.usersService = usersService;
+const messages_service_1 = require("./messages.service");
+const auth_guard_1 = require("../auth/auth.guard");
+let MessagesController = class MessagesController {
+    messagesService;
+    constructor(messagesService) {
+        this.messagesService = messagesService;
     }
-    findAll() {
-        return this.usersService.findAll();
-    }
-    async findById(id) {
-        return await this.usersService.findById(id);
+    printMessage(message) {
+        return this.messagesService.printMessage(message);
     }
 };
-exports.UsersController = UsersController;
+exports.MessagesController = MessagesController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)('print/:message'),
+    __param(0, (0, common_1.Param)('message')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", String)
-], UsersController.prototype, "findAll", null);
-__decorate([
-    (0, common_1.Get)(':id'),
-    __param(0, (0, common_1.Param)("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], UsersController.prototype, "findById", null);
-exports.UsersController = UsersController = __decorate([
-    (0, common_1.Controller)('users'),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
-], UsersController);
-//# sourceMappingURL=users.controller.js.map
+], MessagesController.prototype, "printMessage", null);
+exports.MessagesController = MessagesController = __decorate([
+    (0, common_1.Controller)('messages'),
+    __metadata("design:paramtypes", [messages_service_1.MessagesService])
+], MessagesController);
+//# sourceMappingURL=messages.controller.js.map

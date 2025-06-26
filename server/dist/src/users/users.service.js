@@ -23,17 +23,31 @@ let UsersService = class UsersService {
         }
         return foundUser;
     }
+    async findByUsername(username) {
+        if (!username) {
+            throw new common_1.BadRequestException('Username is required');
+        }
+        const foundUser = await prisma_client_1.default.user.findFirst({
+            where: { username },
+        });
+        if (!foundUser) {
+            throw new common_1.NotFoundException(`User with username ${username} not found`);
+        }
+        return foundUser;
+    }
     findAll() {
         return 'List of all users';
     }
     async createUser(data) {
-        if (!data.email || !data.name || !data.password) {
-            throw new common_1.BadRequestException('Email, name, and password are required');
+        if (!data.username || !data.password) {
+            throw new common_1.BadRequestException('Userame, and password are required');
         }
         const hashedPassword = await bcrypt.hash(data.password, 10);
-        const newUser = { ...data, password: hashedPassword };
-        console.log('Creating user with data:', newUser);
-        return newUser;
+        const newUser = { username: data.username, password: hashedPassword };
+        const createdUser = await prisma_client_1.default.user.create({
+            data: newUser,
+        });
+        return `User ${createdUser.username} created successfully`;
     }
 };
 exports.UsersService = UsersService;

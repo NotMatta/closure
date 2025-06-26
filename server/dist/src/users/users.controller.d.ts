@@ -5,5 +5,4 @@ export declare class UsersController {
     constructor(usersService: UsersService);
     findAll(): string;
     findById(id: string | undefined): Promise<User>;
-    createUser(data: Partial<User>): Promise<Partial<User>>;
 }

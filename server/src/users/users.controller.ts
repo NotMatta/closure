@@ -15,10 +15,4 @@ export class UsersController {
   async findById(@Param("id") id : string | undefined): Promise<User> {
     return await this.usersService.findById(id);
   }
-
-  @Post()
-  async createUser(@Body() data: Partial<User>): Promise<Partial<User>> {
-    return await this.usersService.createUser(data);
-  }
-
 }
